@@ -3,19 +3,19 @@ package ra.edu;
 import java.util.Scanner;
 
 public class StudentManager {
-    private Student[] students;
-    private int size;
+    private static Student[] students;
+    private static int size;
     private static final int MAX_SIZE = 100;
 
-    public StudentManager() {
+    static {
         // khởi tao mảng 100 sinh viên
         students = new Student[MAX_SIZE];
         size = 0;
     }
 
-    public void showListStudent(){
+    public static void showListStudent() {
         // kểm tra mảng ko có sinh viên
-        if(size == 0){
+        if (size == 0) {
             System.out.println("Chưa có sinh viên nào trong danh sách");
             return;
         }
@@ -27,28 +27,45 @@ public class StudentManager {
         System.out.printf("+%s+%s+%s+%s+%s+%s+\n", "-".repeat(6), "-".repeat(17),
                 "-".repeat(12), "-".repeat(17), "-".repeat(12), "-".repeat(7));
         // duyệt mảng
-        for (int i = 0; i <size ; i++) {
+        for (int i = 0; i < size; i++) {
             students[i].displayData();
         }
         System.out.printf("+%s+%s+%s+%s+%s+%s+\n", "-".repeat(6), "-".repeat(17),
                 "-".repeat(12), "-".repeat(17), "-".repeat(12), "-".repeat(7));
 
     }
-    public void addStudent(){
+
+    public static void addStudent() {
         Scanner sc = new Scanner(System.in);
         Student student = new Student();
-        students[size] = student;
         student.inputData(sc);
+        student.setId(getMaxId() + 1);
+        students[size] = student;
         size++;
     }
-    public void updateStudent(int n){
+
+    public static void updateStudent(int n) {
         Scanner sc = new Scanner(System.in);
         Student student = students[n];
         student.inputData(sc);
     }
-    public void deleteStudent(int s){
+
+    public static void deleteStudent(int s) {
         Scanner sc = new Scanner(System.in);
-        students[s] = null;
+        for(int i = s; i < size - 1; i++) {
+            students[i] = students[i + 1];
+        }
+        students[size - 1] = null;
         size--;
+    }
+
+    private static int getMaxId() {
+        int maxId = 0;
+        for (int i = 0; i < size; i++) {
+            if (maxId < students[i].getId()) {
+                maxId = students[i].getId();
+            }
+        }
+        return maxId;
     }
 }
