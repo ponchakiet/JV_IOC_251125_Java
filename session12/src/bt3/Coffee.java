@@ -1,0 +1,12 @@
+package bt3;
+
+public class Coffee extends Drink {
+    public Coffee(int id, String name, double price) {
+        super(id, name, price);
+    }
+
+    @Override
+    public void prepare() {
+        System.out.println("Cách pha: Pha bằng máy");
+    }
+}
