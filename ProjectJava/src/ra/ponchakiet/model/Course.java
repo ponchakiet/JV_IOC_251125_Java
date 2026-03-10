@@ -72,18 +72,17 @@ public class Course implements IBaseModel{
     }
 
     @Override
-    public void inputData(Scanner sc) {
-        System.out.println("Nhập tên khóa học: ");
+    public void inputData() {
+        System.out.print("Nhập tên khóa học: ");
         name = InputMethods.getString();
-        System.out.println("Nhập thời lượng khóa học: ");
+        System.out.print("Nhập thời lượng khóa học: ");
         duration = InputMethods.getInteger();
-        System.out.println("Nhập giáo viên khóa học: ");
+        System.out.print("Nhập giáo viên khóa học: ");
         instructor = InputMethods.getString();
     }
 
     @Override
     public void displayData() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.printf("| ID: %-5d | Tên: %-35s | Thời lượng: %-3d giờ | GV: %-25s | Ngày tạo: %-12s |\n",
                 id,
                 name,

@@ -107,11 +107,11 @@ public class Student implements IBaseModel {
     }
 
     @Override
-    public void inputData(Scanner sc) {
-        System.out.println("Nhập tên học viên: ");
+    public void inputData() {
+        System.out.print("Nhập tên học viên: ");
         this.name = InputMethods.getString();
         while (true) {
-            System.out.println("Nhập ngày sinh (dd/MM/yyyy): ");
+            System.out.print("Nhập ngày sinh (dd/MM/yyyy): ");
             String dateStr = InputMethods.getString();
             this.dob = Validate.parseDate(dateStr);
             if (this.dob != null) {
@@ -120,7 +120,7 @@ public class Student implements IBaseModel {
             System.out.println(Colors.RED + "Lỗi: Ngày sinh không đúng định dạng dd/MM/yyyy hoặc ngày không tồn tại!" + Colors.RESET);
         }
         while (true) {
-            System.out.println("Nhập email học viên: ");
+            System.out.print("Nhập email học viên: ");
             String emailInput = InputMethods.getString();
             if (Validate.isValidEmail(emailInput)) {
                 this.email = emailInput;
@@ -128,10 +128,10 @@ public class Student implements IBaseModel {
             }
             System.out.println(Colors.RED + "Lỗi: Email không đúng định dạng (VD: example@gmail.com)!" + Colors.RESET);
         }
-        System.out.println("Chọn giới tính (1. Nam | 2. Nữ): ");
+        System.out.print("Chọn giới tính (1. Nam | 2. Nữ): ");
         this.sex = (InputMethods.getInteger() == 1);
         while (true) {
-            System.out.println("Nhập số điện thoại (10 số, bắt đầu bằng 0): ");
+            System.out.print("Nhập số điện thoại (10 số, bắt đầu bằng 0): ");
             String phoneInput = InputMethods.getString();
             if (Validate.isValidPhone(phoneInput)) {
                 this.phone = phoneInput;
@@ -139,7 +139,7 @@ public class Student implements IBaseModel {
             }
             System.out.println(Colors.RED + "Lỗi: Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0!" + Colors.RESET);
         }
-        System.out.println("Nhập mật khẩu: ");
+        System.out.print("Nhập mật khẩu: ");
         this.password = InputMethods.getString();
     }
 

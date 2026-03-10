@@ -1,9 +1,7 @@
 package ra.ponchakiet.dao.impl;
 
 import ra.ponchakiet.dao.ICourseDao;
-import ra.ponchakiet.model.Admin;
 import ra.ponchakiet.model.Course;
-import ra.ponchakiet.model.Student;
 import ra.ponchakiet.utils.ConnectionDB;
 
 import java.sql.*;

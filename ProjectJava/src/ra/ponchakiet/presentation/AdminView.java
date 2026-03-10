@@ -21,7 +21,7 @@ public class AdminView {
     private static final ICourseService courseService = new CourseServiceImpl();
     private static final IStudentService studentService = new StudentServiceImpl();
 
-    public static void showAdminMenu(Scanner sc) {
+    public static void showAdminMenu() {
         while (true) {
             System.out.println("\n========= MENU ADMIN =========");
             System.out.println("1. Quản lý khóa học");
@@ -36,10 +36,10 @@ public class AdminView {
 
             switch (choice) {
                 case 1:
-                    showCourseMenu(sc);
+                    showCourseMenu();
                     break;
                 case 2:
-                    showStudentMenu(sc);
+                    showStudentMenu();
                     break;
                 case 3:
 //                    statisticView.menu(); // Nhay sang lop thong ke
@@ -49,14 +49,14 @@ public class AdminView {
                     break;
                 case 5:
                     System.out.println(Colors.GREEN + "Thoát chương trình" + Colors.RESET);
-                    return;
+                    LoginView.showMenuLogin();
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
         }
     }
 
-    private static void showCourseMenu(Scanner sc) {
+    private static void showCourseMenu() {
         while (true) {
             System.out.println("\n1. Hiển thị danh sách khóa học");
             System.out.println("2. Thêm mới khóa học");
@@ -74,22 +74,22 @@ public class AdminView {
                     showListCourse();
                     break;
                 case 2:
-                    addCourse(sc);
+                    addCourse();
                     break;
                 case 3:
-                    updateCourse(sc);
+                    updateCourse();
                     break;
                 case 4:
-                    deleteCourse(sc);
+                    deleteCourse();
                     break;
                 case 5:
-                    findCourseByName(sc);
+                    findCourseByName();
                     break;
                 case 6:
-                    sortCourse(sc);
+                    sortCourse();
                     break;
                 case 7:
-                    showAdminMenu(sc);
+                    showAdminMenu();
                     break;
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
@@ -97,7 +97,7 @@ public class AdminView {
         }
     }
 
-    private static void showStudentMenu(Scanner sc) {
+    private static void showStudentMenu() {
         while (true) {
             System.out.println("\n1. Hiển thị danh sách học viên");
             System.out.println("2. Thêm mới học viên");
@@ -115,22 +115,22 @@ public class AdminView {
                     showListStudent();
                     break;
                 case 2:
-                    addStudent(sc);
+                    addStudent();
                     break;
                 case 3:
-                    updateStudent(sc);
+                    updateStudent();
                     break;
                 case 4:
-                    deleteStudent(sc);
+                    deleteStudent();
                     break;
                 case 5:
-                    findStudent(sc);
+                    findStudent();
                     break;
                 case 6:
-                    sortStudents(sc);
+                    sortStudents();
                     break;
                 case 7:
-                    showAdminMenu(sc);
+                    showAdminMenu();
                     break;
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
@@ -152,9 +152,9 @@ public class AdminView {
         }
     }
 
-    private static void addStudent(Scanner sc) {
+    private static void addStudent() {
         Student student = new Student();
-        student.inputData(sc);
+        student.inputData();
         while (studentService.isEmailExist(student.getEmail())) {
             System.out.println(Colors.RED + "Tên email đã tồn tại, vui lòng nhập lại!" + Colors.RESET);
             String email;
@@ -174,7 +174,7 @@ public class AdminView {
         System.out.println(Colors.GREEN + "Thêm mới học viên thành công" + Colors.RESET);
     }
 
-    private static void updateStudent(Scanner sc) {
+    private static void updateStudent() {
         showListStudent();
         System.out.println("\nChọn học viên cần cập nhật theo id: ");
         int id = InputMethods.getInteger();
@@ -251,14 +251,14 @@ public class AdminView {
                     student.setCreateAt(LocalDate.now());
                     studentService.update(student, id);
                     System.out.println(Colors.GREEN + "Cập nhật thành công" + Colors.RESET);
-                    showStudentMenu(sc);
+                    showStudentMenu();
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
         }
     }
 
-    private static void deleteStudent(Scanner sc) {
+    private static void deleteStudent() {
         System.out.println("\nChọn học viên cần xóa theo id: ");
         int id = InputMethods.getInteger();
 
@@ -276,7 +276,7 @@ public class AdminView {
         }
     }
 
-    private static void findStudent(Scanner sc) {
+    private static void findStudent() {
         List<Student> students = new ArrayList<>();
         while (true) {
             System.out.println("\n-------Tìm kiếm học viên-------");
@@ -329,14 +329,14 @@ public class AdminView {
                     }
                     break;
                 case 4:
-                    showStudentMenu(sc);
+                    showStudentMenu();
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
         }
     }
 
-    private static void sortStudents(Scanner sc) {
+    private static void sortStudents() {
         System.out.println("\n-------Sắp xếp-------");
         System.out.println("1. Sắp xếp theo tên tăng dần");
         System.out.println("2. Sắp xếp theo tên giảm dần");
@@ -359,12 +359,14 @@ public class AdminView {
             case 4:
                 studentService.sort(2, 2);
                 break;
+            case 5:
+                showStudentMenu();
             default:
                 System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
         }
     }
 
-    private static void showListCourse() {
+    public static void showListCourse() {
         List<Course> list = courseService.findAll();
         if (list.isEmpty()) {
             System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
@@ -378,9 +380,9 @@ public class AdminView {
         }
     }
 
-    private static void addCourse(Scanner sc) {
+    private static void addCourse() {
         Course course = new Course();
-        course.inputData(sc);
+        course.inputData();
 
         while (courseService.isNameExist(course.getName())) {
             System.out.println(Colors.RED + "Tên khóa học đã tồn tại, vui lòng nhập lại!" + Colors.RESET);
@@ -391,9 +393,9 @@ public class AdminView {
         System.out.println(Colors.GREEN + "Thêm mới khóa học thành công" + Colors.RESET + "\n");
     }
 
-    private static void updateCourse(Scanner sc) {
+    private static void updateCourse() {
         showListCourse();
-        System.out.println("\nChọn khóa học cần cập nhật theo id: ");
+        System.out.print("\nChọn khóa học cần cập nhật theo id: ");
         int id = InputMethods.getInteger();
 
         Course course = courseService.findById(id);
@@ -431,14 +433,14 @@ public class AdminView {
                     course.setCreateAt(LocalDate.now());
                     courseService.update(course, id);
                     System.out.println(Colors.GREEN + "Cập nhật thành công" + Colors.RESET);
-                    showCourseMenu(sc);
+                    showCourseMenu();
                 default:
                     System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
         }
     }
 
-    private static void deleteCourse(Scanner sc) {
+    private static void deleteCourse() {
         System.out.println("\nChọn khóa học cần xóa theo id: ");
         int id = InputMethods.getInteger();
 
@@ -456,7 +458,7 @@ public class AdminView {
         }
     }
 
-    private static void findCourseByName(Scanner sc) {
+    public static void findCourseByName() {
         System.out.println("Nhập tên khóa học bạn muốn tìm kiếm: ");
         String name = InputMethods.getString();
         List<Course> courses = courseService.findByName(name);
@@ -471,7 +473,7 @@ public class AdminView {
         }
     }
 
-    private static void sortCourse(Scanner sc) {
+    private static void sortCourse() {
         System.out.println("\n-------Sắp xếp-------");
         System.out.println("1. Sắp xếp theo tên tăng dần");
         System.out.println("2. Sắp xếp theo tên giảm dần");
@@ -494,6 +496,8 @@ public class AdminView {
             case 4:
                 courseService.sort(2, 2);
                 break;
+            case 5:
+                showCourseMenu();
             default:
                 System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
         }

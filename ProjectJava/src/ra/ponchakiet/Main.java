@@ -2,11 +2,8 @@ package ra.ponchakiet;
 
 import ra.ponchakiet.presentation.LoginView;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        LoginView.showMenuLogin(sc);
+        LoginView.showMenuLogin();
     }
 }
