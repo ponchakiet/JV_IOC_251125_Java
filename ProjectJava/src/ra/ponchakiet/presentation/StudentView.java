@@ -203,6 +203,6 @@ public class StudentView {
     }
 
     private static void changePassword() {
-        
+
     }
 }
