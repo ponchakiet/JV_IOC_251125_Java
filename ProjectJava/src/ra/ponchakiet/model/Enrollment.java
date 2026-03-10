@@ -1,13 +1,13 @@
 package ra.ponchakiet.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Enrollment implements IBaseModel {
     private int id;
     private int studentId;
     private int courseId;
-    private LocalDate registeredAt;
+    private LocalDateTime registeredAt;
     private EnrollmentStatus status; // 'WAITING', 'DENIED', 'CANCEL', 'CONFIRM'
 
     public Enrollment() {

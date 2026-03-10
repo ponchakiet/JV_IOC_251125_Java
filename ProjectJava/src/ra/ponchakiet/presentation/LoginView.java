@@ -7,11 +7,13 @@ import ra.ponchakiet.service.IStudentService;
 import ra.ponchakiet.service.impl.AdminServiceImpl;
 import ra.ponchakiet.service.impl.StudentServiceImpl;
 import ra.ponchakiet.utils.Colors;
+import ra.ponchakiet.utils.InputMethods;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class LoginView {
-    private static final Colors color = new Colors();
+    public static Student studentLogin = null;
     private static final IAdminService adminService = new AdminServiceImpl();
     private static final IStudentService studentService = new StudentServiceImpl();
 
@@ -23,7 +25,7 @@ public class LoginView {
             System.out.println("3. Thoát");
             System.out.println("==============================================");
             System.out.print("Nhập lựa chọn: ");
-            int choice = Integer.parseInt(sc.nextLine());
+            int choice = InputMethods.getInteger();
 
             switch (choice) {
                 case 1:
@@ -33,42 +35,43 @@ public class LoginView {
                     loginStudent(sc);
                     break;
                 case 3:
-                    System.out.println(color.GREEN + "Thoát chương trình" + color.RESET);
+                    System.out.println(Colors.GREEN + "Thoát chương trình" + Colors.RESET);
                     System.exit(0);
                 default:
-                    System.out.println(color.RED + "Lựa chọn không đúng!" + color.RESET);
+                    System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
         }
     }
 
     private static void loginAdmin(Scanner sc) {
         System.out.print("Nhập username: ");
-        String username = sc.nextLine();
+        String username = InputMethods.getString();
         System.out.print("Nhập password: ");
-        String password = sc.nextLine();
+        String password = InputMethods.getString();
 
         Admin admin = adminService.login(username, password);
         if (admin != null) {
-            System.out.println("Đăng nhập thành công");
+            System.out.println(Colors.GREEN + "Đăng nhập thành công" + Colors.RESET);
             AdminView.showAdminMenu(sc);
         } else {
-            System.out.println(color.RED + "Sai thông tin tài khoản hoặc mật khẩu. Vui lòng đăng nhập lại!" + color.RESET);
+            System.out.println(Colors.RED + "Sai thông tin tài khoản hoặc mật khẩu. Vui lòng đăng nhập lại!" + Colors.RESET);
             loginAdmin(sc);
         }
     }
 
     private static void loginStudent(Scanner sc) {
         System.out.print("Nhập email: ");
-        String email = sc.nextLine();
+        String email = InputMethods.getString();
         System.out.print("Nhập password: ");
-        String password = sc.nextLine();
+        String password = InputMethods.getString();
 
         Student student = studentService.login(email, password);
         if (student != null) {
-            System.out.println("Đăng nhập thành công");
+            System.out.println(Colors.GREEN + "Đăng nhập thành công" + Colors.RESET);
+            studentLogin = student;
             StudentView.showStudentMenu(sc);
         } else {
-            System.out.println(color.RED + "Sai thông tin tài khoản hoặc mật khẩu. Vui lòng đăng nhập lại!" + color.RESET);
+            System.out.println(Colors.RED + "Sai thông tin tài khoản hoặc mật khẩu. Vui lòng đăng nhập lại!" + Colors.RESET);
             loginStudent(sc);
         }
     }

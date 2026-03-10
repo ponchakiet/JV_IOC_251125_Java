@@ -7,7 +7,7 @@ import ra.ponchakiet.model.Admin;
 import ra.ponchakiet.service.IAdminService;
 
 public class AdminServiceImpl implements IAdminService {
-    private static IAdminDao adminDao = new AdminDaoImpl();
+    private static final IAdminDao adminDao = new AdminDaoImpl();
     @Override
     public Admin login(String username, String password) {
         Admin admin = adminDao.findAdminByUsername(username);
