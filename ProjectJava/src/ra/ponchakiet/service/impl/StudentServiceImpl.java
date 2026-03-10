@@ -84,4 +84,9 @@ public class StudentServiceImpl implements IStudentService {
     public boolean isIdExist(int id) {
         return studentDao.getAll().stream().anyMatch(s -> s.getId() == id);
     }
+
+    @Override
+    public void changePassword(Integer id, String password) {
+        studentDao.updatePassword(id, password);
+    }
 }

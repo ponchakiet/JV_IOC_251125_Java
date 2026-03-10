@@ -1,13 +1,16 @@
 package ra.ponchakiet.presentation;
 
+import org.mindrot.jbcrypt.BCrypt;
 import ra.ponchakiet.model.CoursesEnrollment;
 import ra.ponchakiet.model.Enrollment;
 import ra.ponchakiet.model.EnrollmentStatus;
 import ra.ponchakiet.model.Student;
 import ra.ponchakiet.service.ICourseService;
 import ra.ponchakiet.service.IEnrollmentService;
+import ra.ponchakiet.service.IStudentService;
 import ra.ponchakiet.service.impl.CourseServiceImpl;
 import ra.ponchakiet.service.impl.EnrollmentServiceImpl;
+import ra.ponchakiet.service.impl.StudentServiceImpl;
 import ra.ponchakiet.utils.Colors;
 import ra.ponchakiet.utils.InputMethods;
 
@@ -16,6 +19,7 @@ import java.util.Scanner;
 
 public class StudentView {
     private static final IEnrollmentService enrollmentService = new EnrollmentServiceImpl();
+    private static final IStudentService studentService = new StudentServiceImpl();
     private static final ICourseService courseService = new CourseServiceImpl();
     public static void showStudentMenu() {
         while (true) {
@@ -203,6 +207,23 @@ public class StudentView {
     }
 
     private static void changePassword() {
-
+        String email = LoginView.studentLogin.getEmail();
+        String phone = LoginView.studentLogin.getPhone();
+        System.out.print("Xác nhận Email: ");
+        String currentEmail = InputMethods.getString();
+        System.out.print("Xác nhận SĐT: ");
+        String currentPhone = InputMethods.getString();
+        System.out.print("Nhập mật khẩu cũ: ");
+        String oldPass = InputMethods.getString();
+        if(email.equals(currentEmail) && phone.equals(currentPhone) && BCrypt.checkpw(oldPass, LoginView.studentLogin.getPassword())) {
+            System.out.print("Nhập mật khẩu mới: ");
+            String newPass = InputMethods.getString();
+            studentService.changePassword(LoginView.studentLogin.getId(), BCrypt.hashpw(newPass,BCrypt.gensalt(12)));
+            System.out.println(Colors.GREEN + "Đổi mật khẩu thành công! Vui lòng đăng nhập lại." + Colors.RESET);
+            LoginView.studentLogin = null;
+            LoginView.showMenuLogin();
+        } else {
+            System.out.println(Colors.RED + "Email hoặc SĐT hoặc Mật khẩu cũ không chính xác!" + Colors.RESET);
+        }
     }
 }

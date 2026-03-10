@@ -159,6 +159,19 @@ public class StudentDaoImpl implements IStudentDao {
         return list;
     }
 
+    @Override
+    public void updatePassword(Integer id, String password) {
+        String sql = "UPDATE student SET password = ? WHERE id = ?";
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, password);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Student mapResultSetToStudent(ResultSet rs) throws SQLException {
         Student s = new Student();
         s.setId(rs.getInt("id"));
