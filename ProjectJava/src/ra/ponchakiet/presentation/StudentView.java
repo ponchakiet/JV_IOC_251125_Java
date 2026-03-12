@@ -15,7 +15,6 @@ import ra.ponchakiet.utils.Colors;
 import ra.ponchakiet.utils.InputMethods;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class StudentView {
     private static final IEnrollmentService enrollmentService = new EnrollmentServiceImpl();
@@ -52,7 +51,7 @@ public class StudentView {
                     changePassword();
                     break;
                 case 6:
-                    System.out.println(Colors.GREEN + "Thoát chương trình" + Colors.RESET);
+                    System.out.println(Colors.GREEN + "Đã đăng xuất" + Colors.RESET);
                     LoginView.studentLogin = null;
                     LoginView.showMenuLogin();
                 default:

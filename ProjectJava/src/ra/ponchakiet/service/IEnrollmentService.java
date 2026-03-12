@@ -2,9 +2,10 @@ package ra.ponchakiet.service;
 
 import ra.ponchakiet.model.CoursesEnrollment;
 import ra.ponchakiet.model.Enrollment;
+import ra.ponchakiet.model.EnrollmentDetail;
+import ra.ponchakiet.model.StudentCourse;
 
 import java.util.List;
-import java.util.Scanner;
 
 public interface IEnrollmentService {
     void registerCourse(Enrollment enrollment);
@@ -13,4 +14,10 @@ public interface IEnrollmentService {
     void sort(Integer sortType, Integer sortOrder);
     void cancel(int studentId, int courseId);
     CoursesEnrollment findEnrollment (int studentId, int courseId);
+    List<StudentCourse> displayStudentCourse();
+    void updateStatus(Enrollment enrollment, String status);
+    Enrollment findEnrollmentByIdWaiting(int enrollmentId);
+    List<EnrollmentDetail> getEnrollmentDetailsWaiting();
+    Enrollment findEnrollmentByIdConfirm(int enrollmentId);
+    List<EnrollmentDetail> getEnrollmentDetailsConfirm();
 }

@@ -2,9 +2,7 @@ package ra.ponchakiet.service.impl;
 
 import ra.ponchakiet.dao.IEnrollmentDao;
 import ra.ponchakiet.dao.impl.EnrollmentDaoImpl;
-import ra.ponchakiet.model.Course;
-import ra.ponchakiet.model.CoursesEnrollment;
-import ra.ponchakiet.model.Enrollment;
+import ra.ponchakiet.model.*;
 import ra.ponchakiet.service.IEnrollmentService;
 import ra.ponchakiet.utils.Colors;
 
@@ -52,5 +50,35 @@ public class EnrollmentServiceImpl implements IEnrollmentService {
     @Override
     public CoursesEnrollment findEnrollment(int studentId, int courseId) {
         return  enrollmentDao.findEnrollment(studentId, courseId);
+    }
+
+    @Override
+    public List<StudentCourse> displayStudentCourse() {
+        return enrollmentDao.displayCourseByStudent();
+    }
+
+    @Override
+    public void updateStatus(Enrollment enrollment, String status) {
+        enrollmentDao.updateStatusEnrollment(enrollment, status);
+    }
+
+    @Override
+    public Enrollment findEnrollmentByIdWaiting(int enrollmentId) {
+        return enrollmentDao.findEnrollmentByIdWaiting(enrollmentId);
+    }
+
+    @Override
+    public List<EnrollmentDetail> getEnrollmentDetailsWaiting() {
+        return enrollmentDao.getAllStudentWaiting();
+    }
+
+    @Override
+    public Enrollment findEnrollmentByIdConfirm(int enrollmentId) {
+        return enrollmentDao.findEnrollmentByIdConfirm(enrollmentId);
+    }
+
+    @Override
+    public List<EnrollmentDetail> getEnrollmentDetailsConfirm() {
+        return enrollmentDao.getAllStudentConfirm();
     }
 }
