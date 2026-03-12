@@ -11,7 +11,7 @@ public interface IEnrollmentDao {
     List<CoursesEnrollment> sort(String columnName, String direction);
     void deleteEnrollment(int studentId, int courseId);
     CoursesEnrollment findEnrollment(int studentId, int courseId);
-    List<StudentCourse> displayCourseByStudent();
+    List<StudentCourse> displayCourseByStudent(int page);
     void updateStatusEnrollment(Enrollment enrollment, String status);
     Enrollment findEnrollmentByIdWaiting(int enrollmentId);
     Enrollment findEnrollmentByIdConfirm(int enrollmentId);

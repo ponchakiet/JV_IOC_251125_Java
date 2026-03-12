@@ -1,6 +1,7 @@
 package ra.ponchakiet.presentation;
 
 import org.mindrot.jbcrypt.BCrypt;
+import ra.ponchakiet.model.Course;
 import ra.ponchakiet.model.CoursesEnrollment;
 import ra.ponchakiet.model.Enrollment;
 import ra.ponchakiet.service.ICourseService;
@@ -18,6 +19,7 @@ public class StudentView {
     private static final IEnrollmentService enrollmentService = new EnrollmentServiceImpl();
     private static final IStudentService studentService = new StudentServiceImpl();
     private static final ICourseService courseService = new CourseServiceImpl();
+
     public static void showStudentMenu() {
         while (true) {
             System.out.println("\n========= MENU HỌC VIÊN =========");
@@ -69,6 +71,7 @@ public class StudentView {
 
             switch (choice) {
                 case 1:
+                    showRecomendedCourses();
                     CourseView.showListCourse();
                     break;
                 case 2:
@@ -212,15 +215,32 @@ public class StudentView {
         String currentPhone = InputMethods.getString();
         System.out.print("Nhập mật khẩu cũ: ");
         String oldPass = InputMethods.getString();
-        if(email.equals(currentEmail) && phone.equals(currentPhone) && BCrypt.checkpw(oldPass, LoginView.studentLogin.getPassword())) {
+        if (email.equals(currentEmail) && phone.equals(currentPhone) && BCrypt.checkpw(oldPass, LoginView.studentLogin.getPassword())) {
             System.out.print("Nhập mật khẩu mới: ");
             String newPass = InputMethods.getString();
-            studentService.changePassword(LoginView.studentLogin.getId(), BCrypt.hashpw(newPass,BCrypt.gensalt(12)));
+            studentService.changePassword(LoginView.studentLogin.getId(), BCrypt.hashpw(newPass, BCrypt.gensalt(12)));
             System.out.println(Colors.GREEN + "Đổi mật khẩu thành công! Vui lòng đăng nhập lại." + Colors.RESET);
             LoginView.studentLogin = null;
             LoginView.showMenuLogin();
         } else {
             System.out.println(Colors.RED + "Email hoặc SĐT hoặc Mật khẩu cũ không chính xác!" + Colors.RESET);
+        }
+    }
+
+    private static void showRecomendedCourses() {
+        int page = 1;
+        List<Course> recommendations = courseService.getRecommendedCourses(LoginView.studentLogin.getId());
+
+        if (!recommendations.isEmpty() && page == 1) {
+            System.out.printf(Colors.GREEN + "%sCÓ THỂ BẠN SẼ THÍCH%s" + Colors.RESET, "-".repeat(58), "-".repeat(58));
+            System.out.println();
+            for (Course rc : recommendations) {
+                rc.displayData();
+                System.out.println("-".repeat(135));
+            }
+            page = 0;
+        } else {
+            System.out.println(Colors.GREEN + "CÓ THỂ BẠN SẼ THÍCH :" + Colors.RESET);
         }
     }
 }

@@ -51,9 +51,9 @@ public class StatisticsView {
 
     private static void statisticsCoursesAndStudents() {
         System.out.printf("-".repeat(32));
-        System.out.printf("\n| Tổng số lượng khóa học: %-4d |\n", courseService.totalCourses());
+        System.out.printf("\n| Tổng số lượng khóa học: %-4d |\n", courseService.findAll().size());
         System.out.printf("-".repeat(32));
-        System.out.printf("\n| Tổng số lượng học viên: %-4d |\n", studentService.totalStudents());
+        System.out.printf("\n| Tổng số lượng học viên: %-4d |\n", studentService.findAll().size());
         System.out.printf("-".repeat(32));
         System.out.println();
     }

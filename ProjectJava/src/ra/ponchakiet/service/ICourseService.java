@@ -8,6 +8,6 @@ public interface ICourseService extends IBaseService<Course, Integer> {
     boolean isNameExist(String name);
     List<Course> findByName(String name);
     boolean isIdExist(int id);
-    int totalCourses();
     void findAllPagination();
+    List<Course> getRecommendedCourses(int studentId);
 }

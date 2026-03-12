@@ -137,17 +137,18 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
     }
 
     @Override
-    public List<StudentCourse> displayCourseByStudent() {
+    public List<StudentCourse> displayCourseByStudent(int page) {
         List<StudentCourse> list = new ArrayList<>();
+        int offset = page - 1;
         String sql = "SELECT c.name AS course_name, s.name AS student_name " +
-                "FROM course c " +
+                "FROM (SELECT id, name FROM course ORDER BY id LIMIT 1 OFFSET ?) c " +
                 "JOIN enrollment e ON c.id = e.course_id " +
                 "JOIN student s ON e.student_id = s.id " +
-                "WHERE e.status = 'CONFIRM'" +
-                "ORDER BY c.name, s.name";
+                "WHERE e.status = 'CONFIRM' " +
+                "ORDER BY s.name";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            ps.setInt(1, offset);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 StudentCourse sc = new StudentCourse();

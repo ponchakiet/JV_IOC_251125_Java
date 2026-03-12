@@ -172,24 +172,6 @@ public class StudentDaoImpl implements IStudentDao {
         }
     }
 
-    @Override
-    public int totalStudents() {
-        int total = 0;
-        String sql = "SELECT COUNT(*) FROM STUDENT";
-
-        try (Connection conn = ConnectionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
-
     private Student mapResultSetToStudent(ResultSet rs) throws SQLException {
         Student s = new Student();
         s.setId(rs.getInt("id"));

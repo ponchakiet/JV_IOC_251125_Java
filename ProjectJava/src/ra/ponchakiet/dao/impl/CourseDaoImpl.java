@@ -183,20 +183,31 @@ public class CourseDaoImpl implements ICourseDao {
     }
 
     @Override
-    public int totalCourses() {
-        int total = 0;
-        String sql = "SELECT COUNT(*) FROM COURSE";
-
+    public List<Course> getRecommendedCourses(int studentId) {
+        List<Course> list = new ArrayList<>();
+        String sql = "SELECT c.id, c.name, c.duration, c.instructor, c.created_at FROM enrollment e1 " +
+                "JOIN enrollment e2 ON e1.course_id = e2.course_id AND e1.student_id != e2.student_id " +
+                "JOIN enrollment e3 ON e2.student_id = e3.student_id " +
+                "JOIN course c ON e3.course_id = c.id " +
+                "WHERE e1.student_id = ? " +
+                "AND e3.course_id NOT IN (SELECT course_id FROM enrollment WHERE student_id = ?) " +
+                "GROUP BY c.id, c.name, c.instructor, c.created_at " +
+                "ORDER BY COUNT(*) DESC LIMIT 3";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            ps.setInt(1, studentId);
+            ps.setInt(2, studentId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDuration(rs.getInt("duration"));
+                c.setInstructor(rs.getString("instructor"));
+                c.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(c);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return total;
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
     }
 }

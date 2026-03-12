@@ -69,11 +69,6 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public int totalCourses() {
-        return courseDao.totalCourses();
-    }
-
-    @Override
     public void findAllPagination() {
         int currentPage = 1;
         while (true) {
@@ -104,5 +99,10 @@ public class CourseServiceImpl implements ICourseService {
                 break;
             }
         }
+    }
+
+    @Override
+    public List<Course> getRecommendedCourses(int studentId) {
+        return courseDao.getRecommendedCourses(studentId);
     }
 }

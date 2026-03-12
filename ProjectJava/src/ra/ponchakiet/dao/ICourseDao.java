@@ -13,5 +13,5 @@ public interface ICourseDao {
     List<Course> findCourseByName(String name);
     Course findCourseById(Integer id);
     List<Course> sort(String columnName, String direction);
-    int totalCourses();
+    List<Course> getRecommendedCourses(int studentId);
 }

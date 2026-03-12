@@ -43,20 +43,42 @@ public class EnrollmentView {
     }
 
     private static void showStudentsByCourse() {
-        List<StudentCourse> list = enrollmentService.displayStudentCourse();
-        if (list.isEmpty()) {
-            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
-        } else {
-            String currentCourse = "";
-            for (StudentCourse studentCourse : list) {
-                if (!studentCourse.getCourseName().equalsIgnoreCase(currentCourse)) {
-                    System.out.printf("-".repeat(49));
-                    System.out.printf("\n| KHÓA HỌC: %-35s |\n", studentCourse.getCourseName().toUpperCase());
-                    System.out.printf("-".repeat(49));
-                    System.out.println();
-                    currentCourse = studentCourse.getCourseName();
+        int currentPage = 1;
+        while (true) {
+            List<StudentCourse> list = enrollmentService.displayStudentCourse(currentPage);
+            if (list.isEmpty()) {
+                if (currentPage == 1) {
+                    System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
+                    break;
+                } else {
+                    System.out.println("Bạn đang ở trang cuối cùng!");
+                    currentPage--;
                 }
-                studentCourse.display();
+            } else {
+                String courseName = list.get(0).getCourseName();
+                System.out.printf("-".repeat(49));
+                System.out.printf("\n| KHÓA HỌC: %-35s |\n", courseName.toUpperCase());
+                System.out.printf("-".repeat(49));
+                System.out.println();
+                for (StudentCourse studentCourse : list) {
+                    studentCourse.display();
+                }
+                System.out.printf("-".repeat(49));
+                System.out.println();
+                System.out.println("--- TRANG " + currentPage + " ---");
+            }
+
+            System.out.println("\n[N]: Khóa tiếp | [B]: Khóa trước | [E]: Thoát");
+            System.out.print("Nhập lựa chọn: ");
+            String choice = InputMethods.getString().toUpperCase();
+
+            if (choice.equalsIgnoreCase("N")) {
+                currentPage++;
+            } else if (choice.equalsIgnoreCase("B")) {
+                if (currentPage > 1) currentPage--;
+                else System.out.println("Bạn đang ở trang đầu tiên!");
+            } else if (choice.equalsIgnoreCase("E")) {
+                break;
             }
         }
     }

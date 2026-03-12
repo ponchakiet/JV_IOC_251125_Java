@@ -89,9 +89,4 @@ public class StudentServiceImpl implements IStudentService {
     public void changePassword(Integer id, String password) {
         studentDao.updatePassword(id, password);
     }
-
-    @Override
-    public int totalStudents() {
-        return studentDao.totalStudents();
-    }
 }

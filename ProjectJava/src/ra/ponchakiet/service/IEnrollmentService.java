@@ -14,7 +14,7 @@ public interface IEnrollmentService {
     void sort(Integer sortType, Integer sortOrder);
     void cancel(int studentId, int courseId);
     CoursesEnrollment findEnrollment (int studentId, int courseId);
-    List<StudentCourse> displayStudentCourse();
+    List<StudentCourse> displayStudentCourse(int page);
     void updateStatus(Enrollment enrollment, String status);
     Enrollment findEnrollmentByIdWaiting(int enrollmentId);
     List<EnrollmentDetail> getEnrollmentDetailsWaiting();

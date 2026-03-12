@@ -53,8 +53,8 @@ public class EnrollmentServiceImpl implements IEnrollmentService {
     }
 
     @Override
-    public List<StudentCourse> displayStudentCourse() {
-        return enrollmentDao.displayCourseByStudent();
+    public List<StudentCourse> displayStudentCourse(int page) {
+        return enrollmentDao.displayCourseByStudent(page);
     }
 
     @Override

@@ -16,5 +16,4 @@ public interface IStudentDao {
     List<Student> findStudentByEmailRelative(String email);
     List<Student> sort(String columnName, String direction);
     void updatePassword(Integer id, String password);
-    int totalStudents();
 }
