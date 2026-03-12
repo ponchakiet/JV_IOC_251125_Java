@@ -2,9 +2,9 @@ SET search_path TO quanlykhoahoc;
 
 INSERT INTO student (name, dob, email, sex, phone, password)
 VALUES ('Nguyễn Văn An', '2005-01-15', 'an.nv1@gmail.com', true, '0901000001',
-        '$2a$12$Wig/fMuy6Y./EPyqn3.yeucjMReMZ.WlSxmhSmjZ6tz6mqyzRh8/.'),
+        '$2a$12$W8slbWXjlIbd/.oNLjWm4OV5.Is8kBHrZZ5rzwydojV5HBeRE5/0K'),
        ('Trần Thị Bình', '2005-05-20', 'binh.tt2@gmail.com', false, '0901000002',
-        '$2a$12$Wig/fMuy6Y./EPyqn3.yeucjMReMZ.WlSxmhSmjZ6tz6mqyzRh8/.'),
+        '$2a$12$W8slbWXjlIbd/.oNLjWm4OV5.Is8kBHrZZ5rzwydojV5HBeRE5/0K'),
        ('Lê Hoàng Cường', '2004-12-30', 'cuong.lh3@gmail.com', true, '0901000003',
         '$2a$12$Wig/fMuy6Y./EPyqn3.yeucjMReMZ.WlSxmhSmjZ6tz6mqyzRh8/.'),
        ('Phạm Minh Đạo', '2005-03-10', 'dao.pm4@gmail.com', true, '0901000004',

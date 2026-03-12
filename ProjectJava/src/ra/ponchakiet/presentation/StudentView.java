@@ -3,8 +3,6 @@ package ra.ponchakiet.presentation;
 import org.mindrot.jbcrypt.BCrypt;
 import ra.ponchakiet.model.CoursesEnrollment;
 import ra.ponchakiet.model.Enrollment;
-import ra.ponchakiet.model.EnrollmentStatus;
-import ra.ponchakiet.model.Student;
 import ra.ponchakiet.service.ICourseService;
 import ra.ponchakiet.service.IEnrollmentService;
 import ra.ponchakiet.service.IStudentService;
@@ -182,7 +180,7 @@ public class StudentView {
         int courseId = 0;
         boolean isValid = false;
         while (!isValid) {
-            System.out.println("\nNhập ID khóa học bạn muốn hủy: ");
+            System.out.print("\nNhập ID khóa học bạn muốn hủy: ");
             courseId = InputMethods.getInteger();
             if (!enrollmentService.isExistEnrollment(LoginView.studentLogin.getId(), courseId)) {
                 System.out.println(Colors.RED + "Khóa học bạn chọn chưa đăng ký hoặc không có!" + Colors.RESET);
