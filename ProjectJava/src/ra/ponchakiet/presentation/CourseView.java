@@ -76,7 +76,7 @@ public class CourseView {
         }
 
         courseService.add(course);
-        System.out.println(Colors.GREEN + "Thêm mới khóa học thành công" + Colors.RESET + "\n");
+        System.out.println(Colors.GREEN + "Thêm mới khóa học thành công" + Colors.RESET);
     }
 
     private static void updateCourse() {
@@ -100,7 +100,7 @@ public class CourseView {
             System.out.println("3. Cập nhật giáo viên");
             System.out.println("4. Lưu thay đổi và quay về");
 
-            System.out.println("Nhập lựa chọn: ");
+            System.out.print("Nhập lựa chọn: ");
             int choice = InputMethods.getInteger();
             switch (choice) {
                 case 1:
@@ -127,11 +127,11 @@ public class CourseView {
     }
 
     private static void deleteCourse() {
-        System.out.println("\nChọn khóa học cần xóa theo id: ");
+        System.out.print("\nChọn khóa học cần xóa theo id: ");
         int id = InputMethods.getInteger();
 
         if (courseService.isIdExist(id)) {
-            System.out.println("Bạn có chắc chắn muốn xóa không? (Y/N): ");
+            System.out.print("Bạn có chắc chắn muốn xóa không? (Y/N): ");
             String choice = InputMethods.getString();
             if (choice.equalsIgnoreCase("Y")) {
                 courseService.delete(id);
@@ -145,7 +145,7 @@ public class CourseView {
     }
 
     public static void findCourseByName() {
-        System.out.println("Nhập tên khóa học bạn muốn tìm kiếm: ");
+        System.out.print("Nhập tên khóa học bạn muốn tìm kiếm: ");
         String name = InputMethods.getString();
         List<Course> courses = courseService.findByName(name);
         if (courses.isEmpty()) {
@@ -167,7 +167,7 @@ public class CourseView {
         System.out.println("4. Sắp xếp theo id giảm dần");
         System.out.println("5. Quay về");
 
-        System.out.println("Nhập lựa chọn: ");
+        System.out.print("Nhập lựa chọn: ");
         int choice = InputMethods.getInteger();
         switch (choice) {
             case 1:
