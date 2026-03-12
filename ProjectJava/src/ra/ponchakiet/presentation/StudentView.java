@@ -69,10 +69,10 @@ public class StudentView {
 
             switch (choice) {
                 case 1:
-                    AdminView.showListCourse();
+                    CourseView.showListCourse();
                     break;
                 case 2:
-                    AdminView.findCourseByName();
+                    CourseView.findCourseByName();
                     break;
                 case 3:
                     showStudentMenu();
@@ -84,11 +84,11 @@ public class StudentView {
     }
 
     private static void registerCourse() {
-        AdminView.showListCourse();
+        CourseView.showListCourse();
         Enrollment enrollment = new Enrollment();
         boolean isValid = false;
         while (!isValid) {
-            System.out.println("\nNhập ID khóa học bạn muốn đăng ký: ");
+            System.out.print("\nNhập ID khóa học bạn muốn đăng ký: ");
             int courseId = InputMethods.getInteger();
             if (courseId == 0) showStudentMenu();
             enrollment.setCourseId(courseId);

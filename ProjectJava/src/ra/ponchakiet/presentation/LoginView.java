@@ -11,7 +11,6 @@ import ra.ponchakiet.utils.InputMethods;
 import ra.ponchakiet.utils.Validate;
 
 import java.awt.*;
-import java.util.Scanner;
 
 public class LoginView {
     public static Student studentLogin = null;
