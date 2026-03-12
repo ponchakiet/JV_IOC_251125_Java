@@ -66,4 +66,9 @@ public class CourseServiceImpl implements ICourseService {
     public boolean isIdExist(int id) {
         return courseDao.getAll().stream().anyMatch(c -> c.getId() == id);
     }
+
+    @Override
+    public int totalCourses() {
+        return courseDao.totalCourses();
+    }
 }

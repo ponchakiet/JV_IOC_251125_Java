@@ -5,7 +5,7 @@ import ra.ponchakiet.utils.InputMethods;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Enrollment implements IBaseModel {
+public class Enrollment {
     private int id;
     private int studentId;
     private int courseId;
@@ -59,16 +59,5 @@ public class Enrollment implements IBaseModel {
 
     public void setStatus(EnrollmentStatus status) {
         this.status = status;
-    }
-
-    @Override
-    public void inputData() {
-        System.out.print("Nhập ID khóa học: ");
-        this.courseId = InputMethods.getInteger();
-    }
-
-    @Override
-    public void displayData() {
-
     }
 }

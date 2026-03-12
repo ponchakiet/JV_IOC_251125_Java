@@ -30,7 +30,7 @@ CREATE TABLE course
     created_at DATE DEFAULT CURRENT_DATE
 );
 
-CREATE TYPE enrollment_status AS ENUM ('WAITING', 'DENIED', 'CANCEL', 'CONFIRM');
+CREATE TYPE enrollment_status AS ENUM ('WAITING', 'DENIED', 'CANCEL', 'CONFIRM', 'DELETED');
 
 CREATE TABLE enrollment
 (

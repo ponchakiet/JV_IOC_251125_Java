@@ -20,4 +20,7 @@ public interface IEnrollmentService {
     List<EnrollmentDetail> getEnrollmentDetailsWaiting();
     Enrollment findEnrollmentByIdConfirm(int enrollmentId);
     List<EnrollmentDetail> getEnrollmentDetailsConfirm();
+    List<StudentCourse> statisticsStudentsByCourse();
+    List<StudentCourse> get5CoursesByStudent();
+    List<StudentCourse> getCoursesByStudentOver10();
 }

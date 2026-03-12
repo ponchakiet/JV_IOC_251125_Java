@@ -1,9 +1,6 @@
 package ra.ponchakiet.dao;
 
-import ra.ponchakiet.model.CoursesEnrollment;
-import ra.ponchakiet.model.Enrollment;
-import ra.ponchakiet.model.EnrollmentDetail;
-import ra.ponchakiet.model.StudentCourse;
+import ra.ponchakiet.model.*;
 
 import java.util.List;
 
@@ -20,4 +17,7 @@ public interface IEnrollmentDao {
     Enrollment findEnrollmentByIdConfirm(int enrollmentId);
     List<EnrollmentDetail> getAllStudentWaiting();
     List<EnrollmentDetail> getAllStudentConfirm();
+    List<StudentCourse> countStudentsByCourse();
+    List<StudentCourse> get5CourseByStudents();
+    List<StudentCourse> getCourseByStudentsOver10();
 }

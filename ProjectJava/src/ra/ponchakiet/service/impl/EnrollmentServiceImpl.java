@@ -81,4 +81,19 @@ public class EnrollmentServiceImpl implements IEnrollmentService {
     public List<EnrollmentDetail> getEnrollmentDetailsConfirm() {
         return enrollmentDao.getAllStudentConfirm();
     }
+
+    @Override
+    public List<StudentCourse> statisticsStudentsByCourse() {
+        return enrollmentDao.countStudentsByCourse();
+    }
+
+    @Override
+    public List<StudentCourse> get5CoursesByStudent() {
+        return enrollmentDao.get5CourseByStudents();
+    }
+
+    @Override
+    public List<StudentCourse> getCoursesByStudentOver10() {
+        return enrollmentDao.getCourseByStudentsOver10();
+    }
 }

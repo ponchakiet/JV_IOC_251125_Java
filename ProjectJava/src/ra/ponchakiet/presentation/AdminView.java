@@ -47,7 +47,7 @@ public class AdminView {
                     showEnrollmentMenu();
                     break;
                 case 4:
-//                    changePassword();
+                    showStatisticsMenu();
                     break;
                 case 5:
                     System.out.println(Colors.GREEN + "Đã đăng xuất" + Colors.RESET);
@@ -152,7 +152,7 @@ public class AdminView {
 
             switch (choice) {
                 case 1:
-                    showCoursesByStudent();
+                    showStudentsByCourse();
                     break;
                 case 2:
                     updateEnrollment();
@@ -169,18 +169,106 @@ public class AdminView {
         }
     }
 
-    private static void showCoursesByStudent() {
-        List<StudentCourse> list = enrollmentService.displayStudentCourse();
-        String currentCourse = "";
-        for (StudentCourse studentCourse : list) {
-            if (!studentCourse.getCourseName().equalsIgnoreCase(currentCourse)) {
-                System.out.printf("-".repeat(49));
-                System.out.printf("\n| KHÓA HỌC: %-35s |\n", studentCourse.getCourseName().toUpperCase());
-                System.out.printf("-".repeat(49));
-                System.out.println();
-                currentCourse = studentCourse.getCourseName();
+    private static void showStatisticsMenu() {
+        while (true) {
+            System.out.println("\n1. Thống kê tổng số lượng khóa học và học viên");
+            System.out.println("2. Thống kê học viên theo từng khóa học");
+            System.out.println("3. Top 5 khóa học đông học viên nhất");
+            System.out.println("4. Liệt kê khóa học có trên 10 học viên");
+            System.out.println("5. Quay về menu chính");
+
+            System.out.print("Nhập lựa chọn: ");
+            int choice = InputMethods.getInteger();
+
+            switch (choice) {
+                case 1:
+                    statisticsCoursesAndStudents();
+                    break;
+                case 2:
+                    statisticsStudentsByCourse();
+                    break;
+                case 3:
+                    display5CoursesByStudent();
+                    break;
+                case 4:
+                    displayCoursesByStudentOver10();
+                    break;
+                case 5:
+                    showAdminMenu();
+                    break;
+                default:
+                    System.out.println(Colors.RED + "Lựa chọn không đúng!" + Colors.RESET);
             }
-            studentCourse.display();
+        }
+    }
+
+    private static void statisticsCoursesAndStudents() {
+        System.out.printf("-".repeat(32));
+        System.out.printf("\n| Tổng số lượng khóa học: %-4d |\n", courseService.totalCourses());
+        System.out.printf("-".repeat(32));
+        System.out.printf("\n| Tổng số lượng học viên: %-4d |\n", studentService.totalStudents());
+        System.out.printf("-".repeat(32));
+        System.out.println();
+    }
+
+    private static void statisticsStudentsByCourse() {
+        List<StudentCourse> list = enrollmentService.statisticsStudentsByCourse();
+        if (list.isEmpty()) {
+            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
+        } else {
+            System.out.printf("-".repeat(75));
+            for (StudentCourse studentCourse : list) {
+                System.out.printf("\n| KHÓA HỌC: %-35s | SỐ LƯỢNG HỌC VIÊN: %-4s |\n", studentCourse.getCourseName().toUpperCase(), studentCourse.getStudentName());
+                System.out.printf("-".repeat(75));
+            }
+            System.out.println();
+        }
+    }
+
+    private static void display5CoursesByStudent() {
+        List<StudentCourse> list = enrollmentService.get5CoursesByStudent();
+        if (list.isEmpty()) {
+            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
+        } else {
+            System.out.printf("-".repeat(75));
+            for (StudentCourse studentCourse : list) {
+                System.out.printf("\n| KHÓA HỌC: %-35s | SỐ LƯỢNG HỌC VIÊN: %-4s |\n", studentCourse.getCourseName().toUpperCase(), studentCourse.getStudentName());
+                System.out.printf("-".repeat(75));
+            }
+            System.out.println();
+        }
+    }
+
+    private static void displayCoursesByStudentOver10() {
+        List<StudentCourse> list = enrollmentService.getCoursesByStudentOver10();
+        if (list.isEmpty()) {
+            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
+        } else {
+            System.out.printf("-".repeat(75));
+            for (StudentCourse studentCourse : list) {
+                System.out.printf("\n| KHÓA HỌC: %-35s | SỐ LƯỢNG HỌC VIÊN: %-4s |\n", studentCourse.getCourseName().toUpperCase(), studentCourse.getStudentName());
+                System.out.printf("-".repeat(75));
+            }
+            System.out.println();
+        }
+    }
+
+    private static void showStudentsByCourse() {
+        List<StudentCourse> list = enrollmentService.displayStudentCourse();
+        if (list.isEmpty()) {
+            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
+        } else {
+            String currentCourse = "";
+            for (StudentCourse studentCourse : list) {
+                if (!studentCourse.getCourseName().equalsIgnoreCase(currentCourse)) {
+                    System.out.printf("-".repeat(49));
+                    System.out.printf("\n| KHÓA HỌC: %-35s |\n", studentCourse.getCourseName().toUpperCase());
+                    System.out.printf("-".repeat(49));
+                    System.out.println();
+                    currentCourse = studentCourse.getCourseName();
+                }
+                studentCourse.display();
+            }
         }
     }
 
@@ -202,12 +290,12 @@ public class AdminView {
         if (enrollment == null) {
             System.out.println(Colors.RED + "Không tìm thấy ID này!" + Colors.RESET);
         } else {
-            while(true) {
+            while (true) {
                 System.out.println("1. Thêm học viên vào khóa học");
                 System.out.println("2. Từ chối học viên vào khóa học");
                 System.out.println("3. Quay về");
                 System.out.println("Nhập lựa chọn: ");
-                int choice =  InputMethods.getInteger();
+                int choice = InputMethods.getInteger();
                 switch (choice) {
                     case 1:
                         enrollment.setRegisteredAt(LocalDateTime.now());
@@ -250,7 +338,7 @@ public class AdminView {
             System.out.println(Colors.RED + "Không tìm thấy ID này!" + Colors.RESET);
         } else {
 
-            enrollmentService.updateStatus(enrollment, "CANCEL");
+            enrollmentService.updateStatus(enrollment, "DELETED");
             System.out.println(Colors.GREEN + "Xóa học viên khỏi khóa học thành công!" + Colors.RESET);
         }
     }

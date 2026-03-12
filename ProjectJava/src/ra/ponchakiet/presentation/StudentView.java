@@ -98,7 +98,7 @@ public class StudentView {
             if (!courseService.isIdExist(courseId)) {
                 System.out.println(Colors.RED + "ID khóa học không tồn tại!" + Colors.RESET);
             } else if (enrollmentService.isExistEnrollment(enrollment.getStudentId(), courseId)) {
-                System.out.println(Colors.RED + "Bạn đã đăng ký khóa học này rồi!" + Colors.RESET);
+                System.out.println(Colors.RED + "Bạn không được phép đăng ký khóa học này!" + Colors.RESET);
             } else {
                 isValid = true;
             }

@@ -30,7 +30,7 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
 
     @Override
     public boolean isExistEnrollment(int studentId, int courseId) {
-        String sql = "SELECT COUNT(*) FROM ENROLLMENT WHERE student_id = ? AND course_id = ? AND (status = 'WAITING' OR status = 'CONFIRM')";
+        String sql = "SELECT COUNT(*) FROM ENROLLMENT WHERE student_id = ? AND course_id = ? AND (status != 'CANCEL')";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, studentId);
@@ -273,6 +273,86 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
                 dto.setStatus(rs.getString("status"));
                 dto.setRegisteredAt(rs.getTimestamp("registered_at").toLocalDateTime().toLocalDate());
                 list.add(dto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<StudentCourse> countStudentsByCourse() {
+        List<StudentCourse> list = new ArrayList<>();
+        String sql = "SELECT c.name AS course_name, COUNT(e.student_id) AS total_students " +
+                "FROM course c " +
+                "JOIN enrollment e ON c.id = e.course_id " +
+                "WHERE e.status = 'CONFIRM' " +
+                "GROUP BY c.name " +
+                "ORDER BY course_name";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                StudentCourse sc = new StudentCourse();
+                sc.setCourseName(rs.getString("course_name"));
+                sc.setStudentName(String.valueOf(rs.getInt("total_students")));
+                list.add(sc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<StudentCourse> get5CourseByStudents() {
+        List<StudentCourse> list = new ArrayList<>();
+        String sql = "SELECT c.name AS course_name, COUNT(e.student_id) AS total_students " +
+                "FROM course c " +
+                "JOIN enrollment e ON c.id = e.course_id " +
+                "WHERE e.status = 'CONFIRM' " +
+                "GROUP BY c.name " +
+                "ORDER BY total_students DESC " +
+                "LIMIT 5";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                StudentCourse sc = new StudentCourse();
+                sc.setCourseName(rs.getString("course_name"));
+                sc.setStudentName(String.valueOf(rs.getInt("total_students")));
+                list.add(sc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<StudentCourse> getCourseByStudentsOver10() {
+        List<StudentCourse> list = new ArrayList<>();
+        String sql = "SELECT c.name AS course_name, COUNT(e.student_id) AS total_students " +
+                "FROM course c " +
+                "JOIN enrollment e ON c.id = e.course_id " +
+                "WHERE e.status = 'CONFIRM' " +
+                "GROUP BY c.name " +
+                "HAVING COUNT(e.student_id) > 10 " +
+                "ORDER BY course_name";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                StudentCourse sc = new StudentCourse();
+                sc.setCourseName(rs.getString("course_name"));
+                sc.setStudentName(String.valueOf(rs.getInt("total_students")));
+                list.add(sc);
             }
         } catch (SQLException e) {
             e.printStackTrace();
