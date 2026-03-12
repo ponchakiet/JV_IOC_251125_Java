@@ -9,4 +9,5 @@ public interface ICourseService extends IBaseService<Course, Integer> {
     List<Course> findByName(String name);
     boolean isIdExist(int id);
     int totalCourses();
+    void findAllPagination();
 }

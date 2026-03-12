@@ -5,6 +5,7 @@ import ra.ponchakiet.model.Course;
 import java.util.List;
 
 public interface ICourseDao {
+    List<Course> getAll(int page);
     List<Course> getAll();
     void saveCourse(Course course);
     void updateCourse(Course course, Integer id);

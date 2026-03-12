@@ -10,6 +10,32 @@ import java.util.List;
 
 public class CourseDaoImpl implements ICourseDao {
     @Override
+    public List<Course> getAll(int page) {
+        List<Course> list = new ArrayList<>();
+        int offset = (page - 1) * 5;
+        String sql = "SELECT * FROM COURSE ORDER BY id LIMIT 5 OFFSET ?";
+        try (
+                Connection conn = ConnectionDB.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setInt(1, offset);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDuration(rs.getInt("duration"));
+                c.setInstructor(rs.getString("instructor"));
+                c.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
     public List<Course> getAll() {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM COURSE";

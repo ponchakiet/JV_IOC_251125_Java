@@ -5,6 +5,7 @@ import ra.ponchakiet.dao.impl.CourseDaoImpl;
 import ra.ponchakiet.model.Course;
 import ra.ponchakiet.service.ICourseService;
 import ra.ponchakiet.utils.Colors;
+import ra.ponchakiet.utils.InputMethods;
 
 import java.util.List;
 
@@ -59,16 +60,49 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public boolean isNameExist(String name) {
-        return courseDao.getAll().stream().anyMatch(c -> c.getName().equals(name));
+        return findAll().stream().anyMatch(c -> c.getName().equals(name));
     }
 
     @Override
     public boolean isIdExist(int id) {
-        return courseDao.getAll().stream().anyMatch(c -> c.getId() == id);
+        return findAll().stream().anyMatch(c -> c.getId() == id);
     }
 
     @Override
     public int totalCourses() {
         return courseDao.totalCourses();
+    }
+
+    @Override
+    public void findAllPagination() {
+        int currentPage = 1;
+        while (true) {
+            List<Course> list = courseDao.getAll(currentPage);
+            System.out.printf("\n%sDANH SÁCH KHÓA HỌC%s\n", "-".repeat(58), "-".repeat(58));
+            for(Course course : list) {
+                course.displayData();
+                System.out.printf("%s\n", "-".repeat(135));
+            }
+            System.out.println("--- TRANG " + currentPage + " ---");
+            System.out.println("\n[N] - Trang tiếp | [B] - Trang trước | [E] - Thoát");
+            System.out.print("Lựa chọn của bạn: ");
+            String choice = InputMethods.getString();
+
+            if (choice.equalsIgnoreCase("N")) {
+                if (list.size() < 5) {
+                    System.out.println("Bạn đang ở trang cuối cùng!");
+                } else {
+                    currentPage++;
+                }
+            } else if (choice.equalsIgnoreCase("B")) {
+                if (currentPage > 1) {
+                    currentPage--;
+                } else {
+                    System.out.println("Bạn đang ở trang đầu tiên!");
+                }
+            } else if (choice.equalsIgnoreCase("E")) {
+                break;
+            }
+        }
     }
 }

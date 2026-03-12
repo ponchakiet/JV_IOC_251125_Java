@@ -57,12 +57,7 @@ public class CourseView {
         if (list.isEmpty()) {
             System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
         } else {
-            System.out.printf("\n%sDANH SÁCH KHÓA HỌC%s\n", "-".repeat(58), "-".repeat(58));
-
-            for (Course course : list) {
-                course.displayData();
-                System.out.printf("%s\n", "-".repeat(135));
-            }
+            courseService.findAllPagination();
         }
     }
 
