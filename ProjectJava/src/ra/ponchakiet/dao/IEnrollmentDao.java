@@ -7,8 +7,8 @@ import java.util.List;
 public interface IEnrollmentDao {
     void saveEnrollment(Enrollment enrollment);
     boolean isExistEnrollment (int studentId, int courseId);
-    List<CoursesEnrollment> coursesRegisted(int studentId);
-    List<CoursesEnrollment> sort(String columnName, String direction);
+    List<CoursesEnrollment> coursesRegisted(int studentId, int page);
+    List<CoursesEnrollment> sort(String columnName, String direction, int studentId);
     void deleteEnrollment(int studentId, int courseId);
     CoursesEnrollment findEnrollment(int studentId, int courseId);
     List<StudentCourse> displayCourseByStudent(int page);

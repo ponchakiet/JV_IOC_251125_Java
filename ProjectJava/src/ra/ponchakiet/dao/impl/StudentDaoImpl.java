@@ -1,6 +1,7 @@
 package ra.ponchakiet.dao.impl;
 
 import ra.ponchakiet.dao.IStudentDao;
+import ra.ponchakiet.model.Course;
 import ra.ponchakiet.model.Student;
 import ra.ponchakiet.utils.ConnectionDB;
 
@@ -170,6 +171,34 @@ public class StudentDaoImpl implements IStudentDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Student> getAll(int page) {
+        List<Student> list = new ArrayList<>();
+        int offset = (page - 1) * 5;
+        String sql = "SELECT * FROM STUDENT ORDER BY id LIMIT 5 OFFSET ?";
+        try (
+                Connection conn = ConnectionDB.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setInt(1, offset);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Student c = new Student();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setDob(rs.getDate("dob").toLocalDate());
+                c.setEmail(rs.getString("email"));
+                c.setSex(rs.getBoolean("sex"));
+                c.setPhone(rs.getString("phone"));
+                c.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     private Student mapResultSetToStudent(ResultSet rs) throws SQLException {

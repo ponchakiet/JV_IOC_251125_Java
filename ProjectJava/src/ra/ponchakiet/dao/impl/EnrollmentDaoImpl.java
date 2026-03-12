@@ -46,15 +46,18 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
     }
 
     @Override
-    public List<CoursesEnrollment> coursesRegisted(int studentId) {
+    public List<CoursesEnrollment> coursesRegisted(int studentId, int page) {
         List<CoursesEnrollment> list = new ArrayList<>();
+        int offset = (page - 1) * 5;
         String sql = "SELECT c.id, c.name, c.instructor, " +
                 "e.status, e.registered_at " +
                 "FROM ENROLLMENT e JOIN COURSE c ON e.course_id = c.id " +
-                "WHERE e.student_id = ?";
+                "WHERE e.student_id = ? " +
+                "ORDER BY c.id LIMIT 5 OFFSET ?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, studentId);
+            ps.setInt(2, offset);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CoursesEnrollment ce = new CoursesEnrollment();
@@ -72,15 +75,17 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
     }
 
     @Override
-    public List<CoursesEnrollment> sort(String columnName, String direction) {
+    public List<CoursesEnrollment> sort(String columnName, String direction, int studentId) {
         List<CoursesEnrollment> list = new ArrayList<>();
         String sql = "SELECT c.id, c.name, c.instructor, " +
                 "e.status, e.registered_at " +
                 "FROM ENROLLMENT e JOIN COURSE c ON e.course_id = c.id " +
+                "WHERE e.student_id = ? " +
                 "ORDER BY " + columnName + " " + direction;
 
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, studentId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CoursesEnrollment ce = new CoursesEnrollment();

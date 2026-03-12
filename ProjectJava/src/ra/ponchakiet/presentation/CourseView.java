@@ -122,6 +122,7 @@ public class CourseView {
     }
 
     private static void deleteCourse() {
+        showListCourse();
         System.out.print("\nChọn khóa học cần xóa theo id: ");
         int id = InputMethods.getInteger();
 

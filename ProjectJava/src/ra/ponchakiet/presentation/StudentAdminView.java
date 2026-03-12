@@ -1,6 +1,7 @@
 package ra.ponchakiet.presentation;
 
 import org.mindrot.jbcrypt.BCrypt;
+import ra.ponchakiet.model.Course;
 import ra.ponchakiet.model.Student;
 import ra.ponchakiet.service.IStudentService;
 import ra.ponchakiet.service.impl.StudentServiceImpl;
@@ -61,12 +62,7 @@ public class StudentAdminView {
         if (list.isEmpty()) {
             System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
         } else {
-            System.out.printf("\n%sDANH SÁCH HỌC VIÊN%s\n", "-".repeat(62), "-".repeat(62));
-
-            for (Student student : list) {
-                student.displayData();
-                System.out.printf("%s\n", "-".repeat(142));
-            }
+            studentService.findAllPagination();
         }
     }
 
@@ -94,7 +90,7 @@ public class StudentAdminView {
 
     private static void updateStudent() {
         showListStudent();
-        System.out.println("\nChọn học viên cần cập nhật theo id: ");
+        System.out.print("\nChọn học viên cần cập nhật theo id: ");
         int id = InputMethods.getInteger();
 
         Student student = studentService.findById(id);
@@ -177,6 +173,7 @@ public class StudentAdminView {
     }
 
     private static void deleteStudent() {
+        showListStudent();
         System.out.println("\nChọn học viên cần xóa theo id: ");
         int id = InputMethods.getInteger();
 

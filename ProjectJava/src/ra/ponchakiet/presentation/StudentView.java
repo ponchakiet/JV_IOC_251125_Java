@@ -134,17 +134,7 @@ public class StudentView {
     }
 
     private static void showCoursesRegisted() {
-        List<CoursesEnrollment> list = enrollmentService.coursesEnrollment(LoginView.studentLogin.getId());
-        if (list.isEmpty()) {
-            System.out.println(Colors.RED + "Danh sách trống" + Colors.RESET);
-        } else {
-            System.out.printf("\n%sDANH SÁCH MÔN HỌC ĐÃ ĐĂNG KÝ%s\n", "-".repeat(57), "-".repeat(57));
-
-            for (CoursesEnrollment ce : list) {
-                ce.displayData();
-                System.out.printf("%s\n", "-".repeat(142));
-            }
-        }
+        enrollmentService.coursesEnrollment(LoginView.studentLogin.getId());
     }
 
     private static void sort() {
@@ -159,16 +149,16 @@ public class StudentView {
         int choice = InputMethods.getInteger();
         switch (choice) {
             case 1:
-                enrollmentService.sort(1, 1);
+                enrollmentService.sort(1, 1, LoginView.studentLogin.getId());
                 break;
             case 2:
-                enrollmentService.sort(1, 2);
+                enrollmentService.sort(1, 2, LoginView.studentLogin.getId());
                 break;
             case 3:
-                enrollmentService.sort(2, 1);
+                enrollmentService.sort(2, 1, LoginView.studentLogin.getId());
                 break;
             case 4:
-                enrollmentService.sort(2, 2);
+                enrollmentService.sort(2, 2, LoginView.studentLogin.getId());
                 break;
             case 5:
                 coursesRegisted();

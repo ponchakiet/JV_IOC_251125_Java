@@ -11,4 +11,5 @@ public interface IStudentService extends IBaseService<Student, Integer> {
     boolean isEmailExist(String email);
     boolean isIdExist(int id);
     void changePassword(Integer id, String password);
+    void findAllPagination();
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public interface IStudentDao {
     Student findStudentByEmail(String email);
     List<Student> getAll();
+    List<Student> getAll(int page);
     void saveStudent(Student student);
     void updateStudent(Student student, Integer id);
     void deleteStudent(Integer id);

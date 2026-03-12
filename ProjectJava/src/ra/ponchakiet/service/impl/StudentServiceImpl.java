@@ -9,6 +9,7 @@ import ra.ponchakiet.model.Course;
 import ra.ponchakiet.model.Student;
 import ra.ponchakiet.service.IStudentService;
 import ra.ponchakiet.utils.Colors;
+import ra.ponchakiet.utils.InputMethods;
 
 import java.util.List;
 
@@ -88,5 +89,38 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public void changePassword(Integer id, String password) {
         studentDao.updatePassword(id, password);
+    }
+
+    @Override
+    public void findAllPagination() {
+        int currentPage = 1;
+        while (true) {
+            List<Student> list = studentDao.getAll(currentPage);
+            System.out.printf("\n%sDANH SÁCH HỌC VIÊN%s\n", "-".repeat(62), "-".repeat(62));
+            for(Student student : list) {
+                student.displayData();
+                System.out.printf("%s\n", "-".repeat(142));
+            }
+            System.out.println("--- TRANG " + currentPage + " ---");
+            System.out.println("\n[N] - Trang tiếp | [B] - Trang trước | [E] - Thoát");
+            System.out.print("Lựa chọn của bạn: ");
+            String choice = InputMethods.getString();
+
+            if (choice.equalsIgnoreCase("N")) {
+                if (list.size() < 5) {
+                    System.out.println("Bạn đang ở trang cuối cùng!");
+                } else {
+                    currentPage++;
+                }
+            } else if (choice.equalsIgnoreCase("B")) {
+                if (currentPage > 1) {
+                    currentPage--;
+                } else {
+                    System.out.println("Bạn đang ở trang đầu tiên!");
+                }
+            } else if (choice.equalsIgnoreCase("E")) {
+                break;
+            }
+        }
     }
 }
