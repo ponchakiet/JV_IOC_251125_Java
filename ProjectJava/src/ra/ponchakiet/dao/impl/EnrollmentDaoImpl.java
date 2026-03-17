@@ -104,7 +104,7 @@ public class EnrollmentDaoImpl implements IEnrollmentDao {
 
     @Override
     public void deleteEnrollment(int studentId, int courseId) {
-        String sql = "DELETE FROM ENROLLMENT WHERE student_id = ? AND course_id = ?";
+        String sql = "UPDATE enrollment SET status = 'CANCEL' WHERE student_id = ? AND course_id = ?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement pre = conn.prepareStatement(sql)) {
             pre.setInt(1, studentId);
