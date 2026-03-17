@@ -69,19 +69,6 @@ public class StudentAdminView {
     private static void addStudent() {
         Student student = new Student();
         student.inputData();
-        while (studentService.isEmailExist(student.getEmail())) {
-            System.out.println(Colors.RED + "Tên email đã tồn tại, vui lòng nhập lại!" + Colors.RESET);
-            String email;
-            while (true) {
-                System.out.println("Nhập email học viên: ");
-                email = InputMethods.getString();
-                if (email.contains("@") && email.contains(".")) {
-                    break;
-                }
-                System.out.println(Colors.RED + "Email không hợp lệ (thiếu @ hoặc dấu .). Thử lại!" + Colors.RESET);
-            }
-            student.setEmail(email);
-        }
         student.setPassword(BCrypt.hashpw(student.getPassword(), BCrypt.gensalt(12)));
 
         studentService.add(student);
@@ -131,15 +118,18 @@ public class StudentAdminView {
                     }
                     break;
                 case 3:
-                    while (true) {
-                        System.out.println("Nhập email học viên: ");
-                        String emailInput = InputMethods.getString();
-                        if (Validate.isValidEmail(emailInput)) {
+                    String emailInput;
+                    do {
+                        System.out.print("Nhập email học viên: ");
+                        emailInput = InputMethods.getString();
+                        if (studentService.isEmailExist(emailInput)) {
+                            System.out.println(Colors.RED + "Tên email đã tồn tại, vui lòng nhập lại!" + Colors.RESET);
+                        } else if (!Validate.isValidEmail(emailInput)) {
+                            System.out.println(Colors.RED + "Lỗi: Email không đúng định dạng (VD: example@gmail.com)!" + Colors.RESET);
+                        } else {
                             student.setEmail(emailInput);
-                            break;
                         }
-                        System.out.println(Colors.RED + "Lỗi: Email không đúng định dạng (VD: example@gmail.com)!" + Colors.RESET);
-                    }
+                    } while (studentService.isEmailExist(emailInput)||!Validate.isValidEmail(emailInput));
                     break;
                 case 4:
                     System.out.println("Chọn giới tính (1. Nam | 2. Nữ): ");

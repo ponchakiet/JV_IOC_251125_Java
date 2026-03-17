@@ -1,5 +1,7 @@
 package ra.ponchakiet.model;
 
+import ra.ponchakiet.service.IStudentService;
+import ra.ponchakiet.service.impl.StudentServiceImpl;
 import ra.ponchakiet.utils.Colors;
 import ra.ponchakiet.utils.InputMethods;
 import ra.ponchakiet.utils.Validate;
@@ -10,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Student implements IBaseModel {
+    private static final IStudentService studentService = new StudentServiceImpl();
     private int id;
     private String name;
     private LocalDate dob;
@@ -119,15 +122,18 @@ public class Student implements IBaseModel {
             }
             System.out.println(Colors.RED + "Lỗi: Ngày sinh không đúng định dạng dd/MM/yyyy hoặc ngày không tồn tại!" + Colors.RESET);
         }
-        while (true) {
-            System.out.print("Nhập email học viên: ");
-            String emailInput = InputMethods.getString();
-            if (Validate.isValidEmail(emailInput)) {
-                this.email = emailInput;
-                break;
-            }
-            System.out.println(Colors.RED + "Lỗi: Email không đúng định dạng (VD: example@gmail.com)!" + Colors.RESET);
-        }
+        String emailInput;
+         do {
+             System.out.print("Nhập email học viên: ");
+             emailInput = InputMethods.getString();
+             if (studentService.isEmailExist(emailInput)) {
+                 System.out.println(Colors.RED + "Tên email đã tồn tại, vui lòng nhập lại!" + Colors.RESET);
+             } else if (!Validate.isValidEmail(emailInput)) {
+                 System.out.println(Colors.RED + "Lỗi: Email không đúng định dạng (VD: example@gmail.com)!" + Colors.RESET);
+             } else {
+                 this.email = emailInput;
+             }
+         } while (studentService.isEmailExist(emailInput)||!Validate.isValidEmail(emailInput));
         System.out.print("Chọn giới tính (1. Nam | 2. Nữ): ");
         this.sex = (InputMethods.getInteger() == 1);
         while (true) {

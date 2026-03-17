@@ -19,7 +19,16 @@ public class StudentDaoImpl implements IStudentDao {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(mapResultSetToStudent(rs));
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(s);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,7 +95,16 @@ public class StudentDaoImpl implements IStudentDao {
             ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(mapResultSetToStudent(rs));
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(s);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +120,16 @@ public class StudentDaoImpl implements IStudentDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return mapResultSetToStudent(rs);
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                return s;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,7 +145,16 @@ public class StudentDaoImpl implements IStudentDao {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return mapResultSetToStudent(rs);
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                return s;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,7 +171,16 @@ public class StudentDaoImpl implements IStudentDao {
             ps.setString(1, "%" + email + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(mapResultSetToStudent(rs));
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(s);
             }
         } catch (SQLException e) { e.printStackTrace(); }
         return list;
@@ -152,7 +197,16 @@ public class StudentDaoImpl implements IStudentDao {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(mapResultSetToStudent(rs));
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setDob(rs.getDate("dob").toLocalDate());
+                s.setEmail(rs.getString("email"));
+                s.setSex(rs.getBoolean("sex"));
+                s.setPhone(rs.getString("phone"));
+                s.setPassword(rs.getString("password"));
+                s.setCreateAt(rs.getDate("created_at").toLocalDate());
+                list.add(s);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,18 +253,5 @@ public class StudentDaoImpl implements IStudentDao {
             e.printStackTrace();
         }
         return list;
-    }
-
-    private Student mapResultSetToStudent(ResultSet rs) throws SQLException {
-        Student s = new Student();
-        s.setId(rs.getInt("id"));
-        s.setName(rs.getString("name"));
-        s.setDob(rs.getDate("dob").toLocalDate());
-        s.setEmail(rs.getString("email"));
-        s.setSex(rs.getBoolean("sex"));
-        s.setPhone(rs.getString("phone"));
-        s.setPassword(rs.getString("password"));
-        s.setCreateAt(rs.getDate("created_at").toLocalDate());
-        return s;
     }
 }
